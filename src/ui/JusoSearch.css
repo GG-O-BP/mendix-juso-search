@@ -1,0 +1,202 @@
+/* 주소 검색 위젯 스타일 */
+
+.juso-search {
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* 검색 버튼 */
+.juso-search-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 1px solid #264ae5;
+  border-radius: 4px;
+  background-color: #264ae5;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.juso-search-btn:hover {
+  background-color: #1a3cc4;
+}
+
+/* 닫힘 메시지 */
+.juso-search-close-msg {
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background-color: #fff3cd;
+  color: #856404;
+  font-size: 13px;
+}
+
+/* 임베드 영역 */
+.juso-search-embed-area {
+  width: 100%;
+}
+
+.juso-search-embed-container {
+  width: 100%;
+  min-height: 400px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-top: 8px;
+  overflow: hidden;
+  transition: height 0.2s ease;
+}
+
+/* 결과 영역 */
+.juso-search-result {
+  margin-top: 12px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #fafafa;
+}
+
+/* 요약 영역 */
+.juso-search-summary {
+  margin-bottom: 8px;
+}
+
+/* 공통 행 스타일 */
+.juso-search-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+.juso-search-row__label {
+  flex-shrink: 0;
+  min-width: 100px;
+  font-size: 12px;
+  color: #888;
+}
+
+.juso-search-row__value {
+  font-size: 14px;
+  color: #333;
+  word-break: break-all;
+}
+
+/* 상세 보기 토글 버튼 */
+.juso-search-detail-toggle {
+  display: inline-block;
+  padding: 4px 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  color: #555;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.juso-search-detail-toggle:hover {
+  background: #f0f0f0;
+}
+
+/* 상세 필드 영역 */
+.juso-search-fields {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+/* 섹션 */
+.juso-search-section {
+  margin-bottom: 12px;
+}
+
+.juso-search-section__title {
+  margin: 0 0 4px;
+  padding: 4px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #264ae5;
+  border-bottom: 1px solid #eee;
+}
+
+.juso-search-section__body {
+  padding-left: 8px;
+}
+
+/* 상세주소 입력 */
+.juso-search-detail-input-area {
+  margin-top: 12px;
+}
+
+.juso-search-detail__input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.juso-search-detail__input:focus {
+  outline: none;
+  border-color: #264ae5;
+}
+
+/* 액션 버튼 */
+.juso-search-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.juso-search-actions__confirm {
+  padding: 8px 20px;
+  border: 1px solid #264ae5;
+  border-radius: 4px;
+  background-color: #264ae5;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.juso-search-actions__confirm:hover {
+  background-color: #1a3cc4;
+}
+
+.juso-search-actions__reset {
+  padding: 8px 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.juso-search-actions__reset:hover {
+  background-color: #f5f5f5;
+}
+
+/* 검색 정보 */
+.juso-search-info {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #888;
+}
+
+/* Studio Pro 미리보기 */
+.juso-search-preview .juso-search-embed-placeholder {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  color: #888;
+  background-color: #f9f9f9;
+}

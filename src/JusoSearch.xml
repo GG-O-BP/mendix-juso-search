@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="ggobp.jusosearch.JusoSearch" pluginWidget="true" needsEntityContext="true" offlineCapable="true"
+        supportedPlatform="Web"
+        xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Juso Search</name>
+    <description>한국 주소 검색 위젯 (카카오 우편번호 서비스)</description>
+    <icon/>
+    <properties>
+        <propertyGroup caption="General">
+            <property key="displayMode" type="enumeration" defaultValue="popup">
+                <caption>Display mode</caption>
+                <description>팝업 또는 임베드 모드</description>
+                <enumerationValues>
+                    <enumerationValue key="popup">Popup</enumerationValue>
+                    <enumerationValue key="embed">Embed</enumerationValue>
+                </enumerationValues>
+            </property>
+            <property key="buttonLabel" type="string" required="false">
+                <caption>Button label</caption>
+                <description>검색 버튼 텍스트 (빈 값이면 "주소 검색")</description>
+            </property>
+            <property key="initialQuery" type="string" required="false">
+                <caption>Initial query</caption>
+                <description>초기 검색어</description>
+            </property>
+            <property key="autoClose" type="boolean" defaultValue="true">
+                <caption>Auto close</caption>
+                <description>주소 선택 후 자동 닫기</description>
+            </property>
+        </propertyGroup>
+
+        <propertyGroup caption="Address attributes">
+            <property key="zonecodeAttr" type="attribute" required="false">
+                <caption>Zonecode</caption>
+                <description>우편번호 (5자리)</description>
+                <attributeTypes><attributeType name="String"/></attributeTypes>
+            </property>
+            <property key="addressAttr" type="attribute" required="false">
+                <caption>Address</caption>
+                <description>사용자 선택 기준 주소</description>
+                <attributeTypes><attributeType name="String"/></attributeTypes>
+            </property>
+            <property key="roadAddressAttr" type="attribute" required="false">
+                <caption>Road address</caption>
+                <description>도로명주소</description>
+                <attributeTypes><attributeType name="String"/></attributeTypes>
+            </property>
+            <property key="jibunAddressAttr" type="attribute" required="false">
+                <caption>Jibun address</caption>
+                <description>지번주소</description>
+                <attributeTypes><attributeType name="String"/></attributeTypes>
+            </property>
+            <property key="addressEnglishAttr" type="attribute" required="false">
+                <caption>English address</caption>
+                <description>영문 주소</description>
+                <attributeTypes><attributeType name="String"/></attributeTypes>
+            </property>
+            <property key="sidoAttr" type="attribute" required="false">
+                <caption>Sido</caption>
+                <description>시/도</description>
+                <attributeTypes><attributeType name="String"/></attributeTypes>
+            </property>
+            <property key="sigunguAttr" type="attribute" required="false">
+                <caption>Sigungu</caption>
+                <description>시/군/구</description>
+                <attributeTypes><attributeType name="String"/></attributeTypes>
+            </property>
+            <property key="bnameAttr" type="attribute" required="false">
+                <caption>Bname</caption>
+                <description>법정동/리</description>
+                <attributeTypes><attributeType name="String"/></attributeTypes>
+            </property>
+            <property key="buildingNameAttr" type="attribute" required="false">
+                <caption>Building name</caption>
+                <description>건물명</description>
+                <attributeTypes><attributeType name="String"/></attributeTypes>
+            </property>
+        </propertyGroup>
+
+        <propertyGroup caption="Actions">
+            <property key="onSelectAction" type="action" required="false">
+                <caption>On select</caption>
+                <description>주소 선택 후 실행할 액션</description>
+            </property>
+            <property key="onCloseAction" type="action" required="false">
+                <caption>On close</caption>
+                <description>닫힘 시 실행할 액션</description>
+            </property>
+        </propertyGroup>
+
+        <propertyGroup caption="Display options">
+            <property key="width" type="integer" defaultValue="500">
+                <caption>Width</caption>
+                <description>너비 (px 또는 %)</description>
+            </property>
+            <property key="height" type="integer" defaultValue="500">
+                <caption>Height</caption>
+                <description>높이 (px 또는 %)</description>
+            </property>
+            <property key="animation" type="boolean" defaultValue="false">
+                <caption>Animation</caption>
+                <description>애니메이션 효과</description>
+            </property>
+            <property key="hideMapBtn" type="boolean" defaultValue="false">
+                <caption>Hide map button</caption>
+                <description>지도 버튼 숨김</description>
+            </property>
+            <property key="hideEngBtn" type="boolean" defaultValue="false">
+                <caption>Hide English button</caption>
+                <description>영문 전환 버튼 숨김</description>
+            </property>
+            <property key="alwaysShowEngAddr" type="boolean" defaultValue="false">
+                <caption>Always show English</caption>
+                <description>영문 주소 항상 표시</description>
+            </property>
+            <property key="maxSuggestItems" type="integer" defaultValue="10">
+                <caption>Max suggestions</caption>
+                <description>최대 추천 항목 수 (1-10)</description>
+            </property>
+        </propertyGroup>
+
+        <propertyGroup caption="Advanced options">
+            <property key="focusInput" type="boolean" defaultValue="true">
+                <caption>Focus input</caption>
+                <description>검색창 자동 포커스 (PC 전용)</description>
+            </property>
+            <property key="shorthand" type="boolean" defaultValue="true">
+                <caption>Shorthand</caption>
+                <description>시/도 약칭 사용 (서울특별시 → 서울)</description>
+            </property>
+            <property key="showMoreHName" type="boolean" defaultValue="false">
+                <caption>Show admin dong</caption>
+                <description>행정동명 표시 (법정동과 다를 때)</description>
+            </property>
+            <property key="autoMappingRoad" type="boolean" defaultValue="true">
+                <caption>Auto mapping road</caption>
+                <description>도로명 1:N 매핑 시 "선택 안함" 표시</description>
+            </property>
+            <property key="autoMappingJibun" type="boolean" defaultValue="true">
+                <caption>Auto mapping jibun</caption>
+                <description>지번 1:N 매핑 시 "선택 안함" 표시</description>
+            </property>
+            <property key="submitMode" type="boolean" defaultValue="true">
+                <caption>Submit mode</caption>
+                <description>폼 submit 모드</description>
+            </property>
+            <property key="useBannerLink" type="boolean" defaultValue="true">
+                <caption>Banner link</caption>
+                <description>하단 배너 링크 사용</description>
+            </property>
+            <property key="pleaseReadGuide" type="integer" defaultValue="0">
+                <caption>Guide emphasis</caption>
+                <description>검색 결과 초과 시 가이드 강조 (3-20, 0=비활성)</description>
+            </property>
+            <property key="pleaseReadGuideTimer" type="string" required="false">
+                <caption>Guide timer (sec)</caption>
+                <description>가이드 강조 시간(초) (빈 값=1.5)</description>
+            </property>
+            <property key="usePercentWidth" type="boolean" defaultValue="false">
+                <caption>Width as percent</caption>
+                <description>너비를 퍼센트로 사용 (임베드/레이어 전용)</description>
+            </property>
+            <property key="usePercentHeight" type="boolean" defaultValue="false">
+                <caption>Height as percent</caption>
+                <description>높이를 퍼센트로 사용 (임베드/레이어 전용)</description>
+            </property>
+            <property key="minWidth" type="integer" defaultValue="0">
+                <caption>Min width (px)</caption>
+                <description>최소 너비 (0-300, 0=기본값 300)</description>
+            </property>
+            <property key="popupTitle" type="string" required="false">
+                <caption>Popup title</caption>
+                <description>팝업 창 제목</description>
+            </property>
+            <property key="popupKey" type="string" required="false">
+                <caption>Popup key</caption>
+                <description>중복 팝업 방지 키</description>
+            </property>
+            <property key="popupLeft" type="integer" defaultValue="0">
+                <caption>Popup left (px)</caption>
+                <description>팝업 X 좌표 (0=기본)</description>
+            </property>
+            <property key="popupTop" type="integer" defaultValue="0">
+                <caption>Popup top (px)</caption>
+                <description>팝업 Y 좌표 (0=기본)</description>
+            </property>
+        </propertyGroup>
+
+        <propertyGroup caption="Theme">
+            <property key="themeBgColor" type="string" required="false">
+                <caption>Background</caption>
+                <description>전체 배경색 (예: #FFFFFF)</description>
+            </property>
+            <property key="themeSearchBgColor" type="string" required="false">
+                <caption>Search background</caption>
+                <description>검색창 배경색</description>
+            </property>
+            <property key="themeContentBgColor" type="string" required="false">
+                <caption>Content background</caption>
+                <description>콘텐츠 배경색</description>
+            </property>
+            <property key="themePageBgColor" type="string" required="false">
+                <caption>Page background</caption>
+                <description>페이지 배경색</description>
+            </property>
+            <property key="themeTextColor" type="string" required="false">
+                <caption>Text color</caption>
+                <description>기본 텍스트색</description>
+            </property>
+            <property key="themeQueryTextColor" type="string" required="false">
+                <caption>Query text color</caption>
+                <description>검색어 텍스트색</description>
+            </property>
+            <property key="themePostcodeTextColor" type="string" required="false">
+                <caption>Postcode text color</caption>
+                <description>우편번호 텍스트색</description>
+            </property>
+            <property key="themeEmphTextColor" type="string" required="false">
+                <caption>Emphasis text color</caption>
+                <description>강조 텍스트색</description>
+            </property>
+            <property key="themeOutlineColor" type="string" required="false">
+                <caption>Outline color</caption>
+                <description>테두리색</description>
+            </property>
+        </propertyGroup>
+    </properties>
+</widget>
