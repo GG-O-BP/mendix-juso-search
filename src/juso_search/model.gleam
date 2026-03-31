@@ -26,6 +26,7 @@ pub type Msg {
   UserClickedConfirm
   UserClickedReset
   UserToggledDetail
+  UserClosedModal
   // dunji 콜백
   GotAddress(Address)
   GotClose(CloseState)

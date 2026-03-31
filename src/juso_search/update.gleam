@@ -6,7 +6,7 @@ import gleam/option.{None, Some}
 import juso_search/model.{
   type Model, type Msg, GotAddress, GotClose, GotResize, GotSearch, Model,
   UserClickedConfirm, UserClickedEmbedSearch, UserClickedReset,
-  UserClickedSearch, UserInputDetail, UserToggledDetail,
+  UserClickedSearch, UserClosedModal, UserInputDetail, UserToggledDetail,
 }
 import juso_search/props.{type WidgetProps}
 import lustre/effect.{type Effect}
@@ -22,16 +22,20 @@ pub fn update(
   embed_id: String,
 ) -> #(Model, Effect(Msg)) {
   case msg {
-    // 팝업 모드 검색 버튼 클릭
+    // 팝업 모드 검색 버튼 클릭 → 모달 내 임베드로 표시
+    // dunji.open()은 window.open()을 사용해 브라우저 팝업 차단에 걸리므로
+    // dunji.embed()를 CSS 모달 안에 렌더링하는 방식으로 우회
     UserClickedSearch -> {
       let wp = ref.current(props_ref)
       let opts = props.build_options(wp)
       #(
-        model,
-        dunji.open(
+        Model(..model, embed_visible: True),
+        dunji.embed(
+          selector: "#" <> embed_id,
           options: opts,
           on_complete: GotAddress,
           on_close: Some(GotClose),
+          on_resize: Some(GotResize),
           on_search: Some(GotSearch),
         ),
       )
@@ -104,6 +108,11 @@ pub fn update(
         ),
         effect.none(),
       )
+    }
+
+    // 모달 닫기 (팝업 모드)
+    UserClosedModal -> {
+      #(Model(..model, embed_visible: False), effect.none())
     }
 
     // 상세 보기 토글

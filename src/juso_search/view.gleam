@@ -7,7 +7,8 @@ import gleam/int
 import gleam/option.{type Option, None, Some}
 import juso_search/model.{
   type Model, type Msg, UserClickedConfirm, UserClickedEmbedSearch,
-  UserClickedReset, UserClickedSearch, UserInputDetail, UserToggledDetail,
+  UserClickedReset, UserClickedSearch, UserClosedModal, UserInputDetail,
+  UserToggledDetail,
 }
 import juso_search/props.{type WidgetProps, Embed, Popup}
 import lustre/attribute
@@ -51,24 +52,71 @@ fn view_search_area(
   let label = props.button_label(wp)
 
   case wp.display_mode {
-    Popup -> view_popup_area(model, label)
+    Popup -> view_popup_area(model, label, embed_id, model.embed_size)
     Embed -> view_embed_area(model, label, embed_id, model.embed_size)
   }
 }
 
-/// 팝업 모드: 검색 버튼
-fn view_popup_area(model: Model, label: String) -> Element(Msg) {
+/// 팝업 모드: 검색 버튼 + 모달 오버레이 (dunji.embed 사용)
+fn view_popup_area(
+  model: Model,
+  label: String,
+  embed_id: String,
+  size: Option(Size),
+) -> Element(Msg) {
   case model.address {
     None ->
-      html.button(
-        [
-          attribute.class("juso-search-btn"),
-          event.on_click(UserClickedSearch),
-        ],
-        [html.text(label)],
-      )
+      html.div([], [
+        case model.embed_visible {
+          False ->
+            html.button(
+              [
+                attribute.class("juso-search-btn"),
+                event.on_click(UserClickedSearch),
+              ],
+              [html.text(label)],
+            )
+          True -> element.none()
+        },
+        case model.embed_visible {
+          True -> view_modal(embed_id, size)
+          False -> element.none()
+        },
+      ])
     Some(_) -> element.none()
   }
+}
+
+/// 모달 오버레이: 팝업 대신 모달 안에 카카오 우편번호 임베드
+fn view_modal(embed_id: String, size: Option(Size)) -> Element(Msg) {
+  html.div([attribute.class("juso-search-modal-overlay")], [
+    html.div([attribute.class("juso-search-modal")], [
+      html.div([attribute.class("juso-search-modal-header")], [
+        html.span([], [html.text("주소 검색")]),
+        html.button(
+          [
+            attribute.class("juso-search-modal-close"),
+            event.on_click(UserClosedModal),
+          ],
+          [html.text("X")],
+        ),
+      ]),
+      {
+        let height_val = case size {
+          Some(Size(height: h, ..)) -> int.to_string(h) <> "px"
+          None -> "460px"
+        }
+        html.div(
+          [
+            attribute.id(embed_id),
+            attribute.class("juso-search-modal-body"),
+            attribute.style("height", height_val),
+          ],
+          [],
+        )
+      },
+    ]),
+  ])
 }
 
 /// 임베드 모드: 검색 버튼 + 임베드 컨테이너 (Size 반영)
