@@ -169,4 +169,4 @@ Mendix Runtime
 
 ## 라이센스
 
-[Blue Oak Model License 1.0.0](https://blueoakcouncil.org/license/1.0.0)
+[Blue Oak Model License 1.0.0](LICENSE)
